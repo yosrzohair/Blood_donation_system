@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            background-color: #FBE7E8;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #A30D11;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: 0.3s;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            padding: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .sidebar ul li:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        .main-content {
+            margin-left: 260px;
+            padding: 20px;
+            width: 100%;
+        }
+        .alert {
+            background: red;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            animation: blink 1.5s infinite alternate;
+        }
+        @keyframes blink {
+            from { opacity: 1; }
+            to { opacity: 0.5; }
+        }
+        .filters {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 300px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        select, input, button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            width: 100%;
+        }
+        button {
+            background: #A30D11;
+            color: white;
+            font-weight: bold;
+        }
+        .age-filter {
+            display: flex;
+            gap: 10px;
+        }
+        .age-filter input {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <ul>
+            <li>🏥 Hospital: XYZ Medical</li>
+            <li>👤 Admin: John Doe</li>
+            <li>⚙️ Settings</li>
+            <li>🩸 Blood Stock</li>
+            <li>👥 Donors</li>
+            <li>🚨 Urgent Cases</li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="alert">🚨 Urgent Blood Donation Needed! 🚨</div>
+        <div class="filters">
+            <label for="city">Filter by City</label>
+            <select id="city" onchange="updateAddress()">
+                <option value="">Select City</option>
+                <option value="Amman">Amman</option>
+                <option value="Irbid">Irbid</option>
+                <option value="Salt">Salt</option>
+                <option value="Jarash">Jarash</option>
+                <option value="Ajlon">Ajlon</option>
+                <option value="Aqaba">Aqaba</option>
+            </select>
+
+            <label for="address">Filter by Address</label>
+            <select id="address">
+                <option value="">Select Address</option>
+            </select>
+
+            <label for="blood-type">Filter by Blood Type</label>
+            <select id="blood-type">
+                <option value="">Select Blood Type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+
+            <label>Filter by Age</label>
+            <div class="age-filter">
+                <input type="number" id="age-start" placeholder="From" min="0">
+                <input type="number" id="age-end" placeholder="To" min="0">
+            </div>
+
+            <button>Apply Filter</button>
+        </div>
+    </div>
+
+    <script>
+        function updateAddress() {
+            const city = document.getElementById("city").value;
+            const addressDropdown = document.getElementById("address");
+
+            // Clear existing options
+            addressDropdown.innerHTML = '<option value="">Select Address</option>';
+
+            // Define address options based on city selection
+            const addresses = {
+                "Amman": ["Shmesani Hospital", "Rabieh Hospital"],
+                "Irbid": ["Irbid Hospital"],
+                "Salt": ["Salt Hospital"],
+                "Ajlon": ["Ajlon Hospital"],
+                "Aqaba": ["Aqaba Hospital"]
+            };
+
+            // Add new options if city exists in dictionary
+            if (addresses[city]) {
+                addresses[city].forEach(address => {
+                    let option = document.createElement("option");
+                    option.textContent = address;
+                    option.value = address;
+                    addressDropdown.appendChild(option);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
